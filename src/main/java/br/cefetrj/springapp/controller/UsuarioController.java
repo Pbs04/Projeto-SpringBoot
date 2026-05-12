@@ -54,6 +54,6 @@ public class UsuarioController {
         Usuario usuario = service.getById(id);
         service.remover(usuario);
         return ResponseEntity.noContent().build();
-}
+    }
 
 }
