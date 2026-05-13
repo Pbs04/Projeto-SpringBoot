@@ -3,10 +3,12 @@ package br.cefetrj.springapp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import br.cefetrj.springapp.model.Categoria;
 import br.cefetrj.springapp.repository.CategoriaRepository;
 
+@Service
 public class CategoriaService implements GenericService<Categoria> {
     @Autowired
     private CategoriaRepository repository;
