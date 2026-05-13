@@ -11,6 +11,8 @@ import br.cefetrj.springapp.repository.PedidoRepository;
 
 @Service
 public class PedidoService implements GenericService<Pedido>{
+    
+    
     @Autowired
     private PedidoRepository repository;
 
