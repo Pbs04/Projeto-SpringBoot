@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,6 +30,12 @@ public class CategoriaController {
         return ResponseEntity.ok(service.listarTodos(pageable).map(CategoriaDtoOutput::new));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoriaDtoOutput> getById(@PathVariable Long id){
+        Categoria categoria = service.getById(id);
+        return ResponseEntity.ok(new CategoriaDtoOutput(categoria));
+    }
+
     @PostMapping
     public ResponseEntity<CategoriaDtoOutput> cadastrar(@RequestBody CategoriaDtoInput categoriaDtoInput){
         this.service.cadastrar(categoriaDtoInput.build());
@@ -41,7 +47,7 @@ public class CategoriaController {
         @PathVariable Long id,
         @RequestBody CategoriaDtoInput categoriaDtoInput
     ) throws Exception{
-        if(!categoriaDtoInput.getId().equals(id)){
+        if(categoriaDtoInput.getId() == null || !categoriaDtoInput.getId().equals(id)){
             throw new Exception("Erro com id");
         }
 
@@ -49,7 +55,7 @@ public class CategoriaController {
         return ResponseEntity.ok((new CategoriaDtoOutput(categoriaDtoInput.build())));
     }
 
-    @PatchMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Long id){
         Categoria categoria = service.getById(id);
         service.remover(categoria);

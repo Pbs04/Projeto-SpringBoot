@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,6 +30,12 @@ public class UsuarioController {
         return ResponseEntity.ok(service.listarTodos(pageable).map(UsuarioDtoOutput::new));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioDtoOutput> getById(@PathVariable Long id){
+        Usuario usuario = service.getById(id);
+        return ResponseEntity.ok(new UsuarioDtoOutput(usuario));
+    }
+
     @PostMapping
     public ResponseEntity<UsuarioDtoOutput> cadastrar(@RequestBody UsuarioDtoInput usuarioDtoInput){
         this.service.cadastrar(usuarioDtoInput.build());
@@ -49,7 +55,7 @@ public class UsuarioController {
         return ResponseEntity.ok(new UsuarioDtoOutput(usuarioDtoInput.build()));
     }
 
-    @PatchMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Long id){
         Usuario usuario = service.getById(id);
         service.remover(usuario);

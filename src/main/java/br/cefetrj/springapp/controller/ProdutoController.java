@@ -3,8 +3,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,7 +28,13 @@ public class ProdutoController {
     public ResponseEntity<Page<ProdutoDtoOutput>> getProduto(Pageable pageable){
         return ResponseEntity.ok(service.listarTodos(pageable).map(ProdutoDtoOutput::new));
     }
-        
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ProdutoDtoOutput> getById(@PathVariable Long id){ 
+        Produto produto = service.getById(id);
+        return ResponseEntity.ok(new ProdutoDtoOutput(produto));
+    }
+
     @PostMapping
     public ResponseEntity<ProdutoDtoOutput> cadastrar(@RequestBody ProdutoDtoInput produtoDtoInput){
         this.service.cadastrar(produtoDtoInput.build());
@@ -47,7 +53,7 @@ public class ProdutoController {
             return ResponseEntity.ok(new ProdutoDtoOutput(produtoDtoInput.build()));
         }
     
-    @PatchMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Long id){
         Produto produto = service.getById(id);
         service.remover(produto);

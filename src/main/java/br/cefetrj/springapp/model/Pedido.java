@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table (name = "pedido")
-public class Pedido extends EntidadeGenerica {
+public class Pedido extends EntidadeGenerica     {
     
     @ManyToOne
     @JoinColumn(name = "usuario_id")

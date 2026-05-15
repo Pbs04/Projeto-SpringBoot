@@ -9,11 +9,15 @@ public class ProdutoDtoOutput {
     private String nome;
     private String descricao;
     private double preco;
+    private String categoria;
 
     public ProdutoDtoOutput(Produto produto){
         this.id = produto.getId();
         this.nome = produto.getNome();
         this.descricao = produto.getDescricao();
         this.preco = produto.getPreco();
+        this.categoria = produto.getCategoria() != null
+            ? produto.getCategoria().getNome()
+            : "";
     }
 }
