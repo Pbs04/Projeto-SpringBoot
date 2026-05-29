@@ -1,16 +1,14 @@
-# Projeto Spring Boot - Back-End
+# App Corporativa - Back-End
 
-API REST desenvolvida com Java e Spring Boot para gerenciamento de usuários, categorias, produtos e pedidos. O projeto utiliza autenticação com Google OAuth2, validação de JWT e persistência em banco de dados MySQL.
+API REST desenvolvida com Java e Spring Boot para gerenciamento de usuários, categorias, produtos e pedidos, com autenticação via Google OAuth2 e persistência em MySQL.
 
 ## Tecnologias
 
 - Java 21
 - Spring Boot
 - Spring Security
-- OAuth2 Resource Server
-- OAuth2 Client
+- OAuth2 / JWT
 - Spring Data JPA
-- Hibernate
 - MySQL
 - Maven
 - Lombok
@@ -18,63 +16,81 @@ API REST desenvolvida com Java e Spring Boot para gerenciamento de usuários, ca
 ## Funcionalidades
 
 - Autenticação com Google OAuth2
-- Troca do authorization code por token
 - Proteção de rotas com JWT
 - CRUD de usuários
 - CRUD de categorias
 - CRUD de produtos
 - CRUD de pedidos
-- Paginação nas listagens
+- Paginação de registros
 - Integração com frontend web
 
-## Pré-requisitos
+## Como executar
 
-- Java 21
-- Maven
-- MySQL
-- Credenciais OAuth2 configuradas no Google Cloud Console
+Clone o repositório:
 
-## Configuração do banco de dados
+```bash
+git clone https://github.com/Pbs04/Projeto-SpringBoot.git
+```
 
-Crie o banco de dados MySQL:
+Acesse a pasta do projeto:
+
+```bash
+cd Projeto-SpringBoot
+```
+
+Configure as variáveis de ambiente necessárias:
+
+```powershell
+$env:GOOGLE_CLIENT_ID="seu-client-id"
+$env:GOOGLE_CLIENT_SECRET="seu-client-secret"
+```
+
+Execute a aplicação:
+
+```powershell
+.\mvnw spring-boot:run
+```
+
+A API ficará disponível em:
+
+```text
+http://localhost:8080
+```
+
+## Banco de dados
+
+O projeto utiliza MySQL. Crie um banco chamado:
 
 ```sql
 CREATE DATABASE appcorp;
 ```
 
-## Variáveis de ambiente
+As configurações de conexão ficam em:
 
-As credenciais do Google não devem ser colocadas diretamente no código.
-
-Antes de executar o backend, configure as variáveis de ambiente:
-
-```powershell
-$env:GOOGLE_CLIENT_ID="seu-google-client-id"
-$env:GOOGLE_CLIENT_SECRET="seu-google-client-secret"
+```text
+src/main/resources/application.properties
 ```
 
-## Executando o projeto
+## Segurança
 
-Na pasta raiz do backend, execute:
+As credenciais do Google OAuth2 não são versionadas no repositório. A aplicação utiliza variáveis de ambiente para carregar informações sensíveis em tempo de execução.
 
-```powershell
-mvn spring-boot:run
+## Estrutura principal
+
+```text
+src/main/java/br/cefetrj/springapp
+├── controller
+├── model
+├── repository
+├── service
+├── security
+└── config
 ```
 
-## Endpoints principais
+## Front-End
 
-| Recurso | Método | Endpoint |
-|---|---|---|
-| Autenticação Google | POST | `/auth/google` |
-| Listar usuários | GET | `/usuarios/lista` |
-| Buscar usuário por ID | GET | `/usuarios/{id}` |
-| Cadastrar usuário | POST | `/usuarios` |
-| Atualizar usuário | PUT | `/usuarios/{id}` |
-| Remover usuário | DELETE | `/usuarios/{id}` |
-| Categorias | GET/POST/PUT/DELETE | `/categorias` |
-| Produtos | GET/POST/PUT/DELETE | `/produtos` |
-| Pedidos | GET/POST/PUT/DELETE | `/pedidos` |
+Este backend foi desenvolvido para integração com o frontend disponível em:
 
-## Autor
-
-Projeto desenvolvido para fins acadêmicos, utilizando Java Spring Boot, OAuth2, JWT e MySQL.
+```text
+https://github.com/Pbs04/Projeto-SpringBoot-FrontEnd
+```
